@@ -49,7 +49,7 @@ export default function Post({ id, content, postedAt, likeCount }: PostProps) {
 						</button>
 					</h2>
 					<div>
-						<p className="italic">@luizfranzon</p>
+						<p className="italic -mt-2">@luizfranzon</p>
 					</div>
 				</div>
 			</header>

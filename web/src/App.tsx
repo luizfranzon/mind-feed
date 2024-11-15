@@ -24,7 +24,9 @@ export function App() {
   async function getPosts() {
     const respose = await axios.get<PostsResponse>("http://localhost:3000/posts")
     const posts = respose.data.posts
-    setPosts(posts)
+    if (posts) {
+      setPosts(posts)
+    }
   }
 
   useEffect(() => {
@@ -58,7 +60,11 @@ export function App() {
           </div>
         ) : (
           <div className="flex items-center justify-center h-full mt-6">
-            <span className="font-bold">Carregando...</span>
+            <span className="font-bold">
+              {
+                posts.length === 0 ? "Nenhum post encontrado" : "Carregando..."
+              }
+            </span>
           </div>
         )
       }
