@@ -6,7 +6,13 @@ import { prisma } from 'src/utils/prisma';
 @Injectable()
 export class PostsService {
   async create(createPostDto: CreatePostDto) {
-    const { content } = createPostDto;
+    const { content, password } = createPostDto;
+
+    if (password !== '123123') {
+      return {
+        message: 'Invalid password'
+      }
+    }
 
     const createdPost = await prisma.post.create({
       data: {

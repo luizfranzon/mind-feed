@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { formatDistance, format } from "date-fns"
+import { formatDistanceToNow, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Heart } from "phosphor-react"
 import { useState } from "react";
@@ -17,18 +17,18 @@ export default function Post({ id, content, postedAt, likeCount }: PostProps) {
 	const [likesQuantity, setLikesQuantity] = useState(likeCount)
 
 	function timeDistance() {
-		return formatDistance(new Date(postedAt), new Date(), { addSuffix: true, locale: ptBR })
+		return formatDistanceToNow(new Date(postedAt), { addSuffix: false, locale: ptBR })
 	}
 
 	async function handleLikePost() {
-		const response = await axios.get(`http://localhost:3000/posts/like/${id}`)
+		const response = await axios.get(`http://192.168.0.17:3000/posts/like/${id}`)
 		const likesQuantity = response.data.post.likes
 
 		setLikesQuantity(likesQuantity)
 	}
 
 	return (
-		<div className="py-4 border px-4 rounded-xl hover:bg-white/5 transition-colors]">
+		<div className="py-4 border px-4 rounded-xl sm:hover:bg-white/5 transition-colors]">
 			<header className="flex items-center gap-2">
 				<Avatar>
 					<AvatarImage width={46} className="rounded-full" src="https://github.com/luizfranzon.png" alt="Avatar" />
@@ -37,9 +37,11 @@ export default function Post({ id, content, postedAt, likeCount }: PostProps) {
 				<div className="w-full">
 					<h2 className="font-bold flex justify-between w-full">
 						<div className="flex gap-1 items-center">
-							Luiz Franzon
-							<span>·</span>
-							<span title={format(postedAt, "dd/MM/yyyy 'at' hh:mm")} className="font-normal text-sm">
+							<div className="flex gap-1 items-center">
+								Luiz Franzon
+								<span className="sm:block hidden">·</span>
+							</div>
+							<span title={format(postedAt, "dd/MM/yyyy 'at' hh:mm")} className="font-normal text-sm sm:block hidden">
 								{timeDistance()}.
 							</span>
 						</div>
@@ -49,11 +51,11 @@ export default function Post({ id, content, postedAt, likeCount }: PostProps) {
 						</button>
 					</h2>
 					<div>
-						<p className="italic -mt-2">@luizfranzon</p>
+						<p className="italic -mt-2">@luiz</p>
 					</div>
 				</div>
 			</header>
-			<main className="mt-3">
+			<main className="mt-6">
 				<p>{content}</p>
 			</main>
 		</div>

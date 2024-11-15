@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "./components/post";
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 interface Posts {
   id: string
@@ -22,7 +23,7 @@ export function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   async function getPosts() {
-    const respose = await axios.get<PostsResponse>("http://localhost:3000/posts")
+    const respose = await axios.get<PostsResponse>("http://192.168.0.17:3000/posts")
     const posts = respose.data.posts
     if (posts) {
       setPosts(posts)
@@ -36,7 +37,7 @@ export function App() {
   return (
     <>
       <header className="flex items-center justify-center py-8 border-b">
-        <h1 className="font-bold">Luiz Franzon's Mind Feed 🧠</h1>
+        <h1 className="font-bold">Luiz Franzon's Mind Feed <Link to={'/create'}>🧠</Link></h1>
       </header>
       {
         !isLoading ? (
